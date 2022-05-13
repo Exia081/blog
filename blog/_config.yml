@@ -4,8 +4,8 @@
 
 # Site
 title: 看山还是山
-subtitle: ''
-description: ''
+subtitle: 'Exia的博客'
+description: '山重水复疑无路，柳暗花明又一村'
 keywords:
 author: Exia
 language: 'zh-CN'
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-toki
+theme: hexo-theme-next
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

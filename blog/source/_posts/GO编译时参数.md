@@ -1,7 +1,10 @@
 ---
 title: Go编译参数
 date: 2022-05-12 18:37:27
+categories:
+- GO语言 
 tags:
+- GO语言
 ---
 
 # Go编译时参数

@@ -7,7 +7,7 @@ args = `arg="$(filter-out $@,$(MAKECMDGOALS))" && echo $${arg:-${1}}`
 test :
 		@echo $(call args,defaultstring)
 run:
-		npm run dev --registry=https://registry.npm.taobao.org
+		hexo server
 deploy:
 		hexo clean && hexo deploy
 new:

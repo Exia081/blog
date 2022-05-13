@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+    <title>
+        
+            看山还是山
+        
+    </title>
+    <link rel="icon" href="/img/favicon.png"/>
+    
+<link rel="stylesheet" href="/blog/css/style.css">
+
+    
+<link rel="stylesheet" href="/blog/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/blog/css/gitment.css">
+
+    
+<link rel="stylesheet" href="/blog/css/hljs.min.css">
+
+    
+<script src="/blog/js/hljs.min.js"></script>
+  
+    
+<script src="/blog/js/gitment.browser.js"></script>
+  
+<meta name="generator" content="Hexo 5.4.2"></head>
+<body>
+    <header class="header" id="header">
+    <h1>
+        <a class="title" href="/blog/">
+            看山还是山
+        </a>
+    </h1>
+    <h2>
+        <a class="motto">
+            山重水复疑无路，柳暗花明又一村
+        </a>
+    </h2>
+    <nav class="navbar">
+        <ul class="menu">
+            
+            
+                <li class="menu-item">
+                    <a href="/blog/" class="menu-item-link">
+                        Home
+                    </a>
+                </li>
+            
+                
+            
+                <li class="menu-item">
+                    <a target="_blank" rel="noopener" href="https://github.com/Exia081?tab=repositories" class="menu-item-link">
+                        Archives
+                    </a>
+                </li>
+            
+                
+            
+                <li class="menu-item">
+                    <a target="_blank" rel="noopener" href="https://github.com/Exia081" class="menu-item-link">
+                        About
+                    </a>
+                </li>
+            
+                
+            
+                <li class="menu-item">
+                    <a target="_blank" rel="noopener" href="https://github.com/Exia081" class="menu-item-link">
+                        Github
+                    </a>
+                </li>
+            
+                
+            
+                
+                
+        </ul>
+    </nav>
+</header>
+    <main class="main">
+        <section class="posts">
+    
+        <article class="post">
+            <h1>
+                <a class="title" href="/blog/2022/05/12/GO%E7%BC%96%E8%AF%91%E6%97%B6%E5%8F%82%E6%95%B0/"> 
+                    Go编译参数 
+                </a>
+            </h1>
+                        <div class="meta">
+                <a class="date"> 
+                    <i class="fa fa-calendar" aria-hidden="true"></i>                    
+                    2022-05-12   
+                </a>
+                
+                
+                
+                    
+            </div>
+            <div class="content">
+                
+                <h1 id="Go编译时参数"><a href="#Go编译时参数" class="headerlink" title="Go编译时参数"></a>Go编译时参数</h1><p>Go编译时，可以通过传入参数来定制编译过程的特征</p>
+<p>具体参数可以通过 <strong>go help build</strong> 来进行查看</p>
+<p>下面挑选一些常用的参数列举：</p>
+<h2 id="标准参数"><a href="#标准参数" class="headerlink" title="标准参数"></a>标准参数</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-o</td>
+<td>指定构建完成输出路径和文件名</td>
+</tr>
+<tr>
+<td>-i</td>
+<td>已废弃，安装指定的包来完成编译，编译需要的包会自动缓存下来</td>
+</tr>
+<tr>
+<td></td>
+<td>其他参数都被归类为build flags</td>
+</tr>
+</tbody></table>
+<h2 id="build-flags"><a href="#build-flags" class="headerlink" title="build flags"></a>build flags</h2><p>build flags在<strong>build,clean,get,install,list,run,test</strong>等命令下都是通用的</p>
+<p>下面记录一些常用的参数</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-tags ‘tag list’</td>
+<td>（常用） 构建出带tag的版本.</td>
+</tr>
+<tr>
+<td>-gcflags ‘arg list’</td>
+<td>（常用）编译参数go tool compile –help查看所有可用的参数 .</td>
+</tr>
+<tr>
+<td>-ldflags ‘flag list’</td>
+<td>（常用）链接参数go tool link –help查看可用可用的参数</td>
+</tr>
+<tr>
+<td>-mod</td>
+<td>（常用）readonly,vendor,mod 1.14版本以后，如果在mod文件里面有指定vendor，则默认使用vendor，否者设置为readonly</td>
+</tr>
+<tr>
+<td>-race</td>
+<td>（重要）同时检测数据竞争状态，只支持 linux/amd64, freebsd/amd64, darwin/amd64 和 windows/amd64.</td>
+</tr>
+<tr>
+<td>-trimpath</td>
+<td>（重要）删除编译包含的固定路径信息，如 -trimpath=$GOPATH，报错信息打印时只会包含文件的相对路径</td>
+</tr>
+<tr>
+<td>-modfile</td>
+<td>指定使用的modfile文件，但go.mod文件依然是需要的，用于确认编译包的根目录，gosum依然是需要的，如传入的xx.mod, 则需要或对应生成为 xx.sum</td>
+</tr>
+<tr>
+<td>-n</td>
+<td>仅打印输出build需要的命令，不执行build动作（少用）。</td>
+</tr>
+<tr>
+<td>-p n</td>
+<td>开多少核cpu来并行编译，默认为本机CPU核数（少用）。</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>打印出被编译的包名（少用）.</td>
+</tr>
+<tr>
+<td>-work</td>
+<td>打印临时工作目录的名称，并在退出时不删除它（少用）。</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>同时打印输出执行的命令名（-n）（少用）.</td>
+</tr>
+</tbody></table>
+<h2 id="gcflag"><a href="#gcflag" class="headerlink" title="gcflag"></a>gcflag</h2><p>编译参数，我们通过<strong>go tool compile -help</strong>包含哪些</p>
+<p>下面列举一些常用的参数</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-m</td>
+<td>（常用）打印优化信息</td>
+</tr>
+<tr>
+<td>-N</td>
+<td>禁用优化 (debug时用到）</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>禁止内联优化 (debug时用到）</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>指定编译时的的并发数，默认为1</td>
+</tr>
+<tr>
+<td>-L</td>
+<td>错误信息中打印文件全名</td>
+</tr>
+</tbody></table>
+<p>gcflag传入的方式为： -gcflag=”pattern= args”,其中pattern代表取值分别为 main,all,std,…,用于指定编译参数作用的范围，args则为对应的编译参数</p>
+<h3 id="gcflag-中的-pattern"><a href="#gcflag-中的-pattern" class="headerlink" title="gcflag 中的 pattern"></a>gcflag 中的 pattern</h3><p>pattern 是选择包的模式，它可以有以下几种定义:</p>
+<ul>
+<li><p><code>main</code>: 表示 main 函数所在的顶级包路径</p>
+</li>
+<li><p><code>all</code>: 表示 GOPATH 中的所有包。如果在 modules 模式下，则表示主模块和它所有的依赖，包括 test 文件的依赖</p>
+</li>
+<li><p><code>std</code>: 表示 Go 标准库中的所有包</p>
+</li>
+<li><p><code>...</code>: <code>...</code> 是一个通配符，可以匹配任意字符串(包括空字符串)。例如:</p>
+<ul>
+<li><p>例如: <code>net/...</code> 表示 net 模块和它的所有子模块</p>
+</li>
+<li><p><code>./...</code> 表示当前主模块和所有子模块</p>
+</li>
+<li><p><strong>注意:</strong>  如果 pattern 中包含了 <code>/</code> 和 <code>...</code>，那么就不会匹配 <code>vendor</code> 目录</p>
+<ul>
+<li>例如: <code>./...</code> 不会匹配 <code>./vendor</code> 目录。可以使用 <code>./vendor/...</code> 匹配 vendor 目录和它的子模块</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>举例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go build -gcflags=&quot;main=-N -l&quot; .</span><br></pre></td></tr></table></figure>
+
+<h2 id="ldflag"><a href="#ldflag" class="headerlink" title="ldflag"></a>ldflag</h2><p>链接参数,我们通过<strong>go tool link –help</strong> 查看可用的参数</p>
+<p>下面列举一些常用的参数</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-X</td>
+<td>注入变量，通常用于版本信息注入</td>
+</tr>
+</tbody></table>
+<p>举例如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go run -ldflags=&quot;-X main.who handsomeboy&quot; main.go</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+                
+            </div>
+            <div class="continue">
+            <a href="/blog/2022/05/12/GO%E7%BC%96%E8%AF%91%E6%97%B6%E5%8F%82%E6%95%B0/">
+            继续阅读            <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
+            </div>
+        </article>
+        
+</section>
+
+    </main>
+    <a class="not-found">not found!</a>
+    <div class="search-items">
+    </div>
+    <a href="#header" id="top" style="display:none">
+        <i class="fa fa-sort-asc fa-2x"></i>
+    </a>
+    <footer class="footer">
+    <div class="footer-copyright">©️2017
+    <a href="//github.com/Vevlins/toki" class="link" target="_blank">Toki</a>  by Vevlins
+    </div>
+</footer>
+
+    
+<script src="/blog/js/jquery.js"></script>
+
+    
+<script src="/blog/js/toki.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+</body>
+</html>

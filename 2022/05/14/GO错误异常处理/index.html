@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"exia081.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
 
-    <meta name="description" content="错误处理在GO语言中处理错误，go定义的接口类型来处理 12345package builtintype error interface &amp;#123;	Error() string&amp;#125;  在其他语言中，错误有可能是错误码，有可能是错误信息 错误处理非常重要，go语言将其统一成为接口，如果需要获取错误的信息，则调用error()接口，返回错误信息字符串，这统一了错误信息，都作为字符串输出 问">
+    <meta name="description" content="错误处理在GO语言中处理错误，通过接口来处理 12345package builtintype error interface &amp;#123;	Error() string&amp;#125;  在其他语言中，错误有可能是错误码，有可能是错误信息 错误处理非常重要，go语言将其统一成为接口，如果需要获取错误的信息，则调用error()接口，返回错误信息字符串，这统一了错误信息，都作为字符串输出 问题在错误处">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GO错误异常处理">
 <meta property="og:url" content="https://exia081.github.io/blog/2022/05/14/GO%E9%94%99%E8%AF%AF%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="看山还是山">
-<meta property="og:description" content="错误处理在GO语言中处理错误，go定义的接口类型来处理 12345package builtintype error interface &amp;#123;	Error() string&amp;#125;  在其他语言中，错误有可能是错误码，有可能是错误信息 错误处理非常重要，go语言将其统一成为接口，如果需要获取错误的信息，则调用error()接口，返回错误信息字符串，这统一了错误信息，都作为字符串输出 问">
+<meta property="og:description" content="错误处理在GO语言中处理错误，通过接口来处理 12345package builtintype error interface &amp;#123;	Error() string&amp;#125;  在其他语言中，错误有可能是错误码，有可能是错误信息 错误处理非常重要，go语言将其统一成为接口，如果需要获取错误的信息，则调用error()接口，返回错误信息字符串，这统一了错误信息，都作为字符串输出 问题在错误处">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-05-14T05:50:58.000Z">
-<meta property="article:modified_time" content="2022-05-14T07:47:37.747Z">
+<meta property="article:modified_time" content="2022-05-14T07:49:08.464Z">
 <meta property="article:author" content="Exia">
 <meta property="article:tag" content="GO语言">
 <meta name="twitter:card" content="summary">
@@ -223,7 +223,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-14 13:50:58 / 修改时间：15:47:37" itemprop="dateCreated datePublished" datetime="2022-05-14T13:50:58+08:00">2022-05-14</time>
+      <time title="创建时间：2022-05-14 13:50:58 / 修改时间：15:49:08" itemprop="dateCreated datePublished" datetime="2022-05-14T13:50:58+08:00">2022-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -245,7 +245,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h1><p>在GO语言中处理错误，go定义的接口类型来处理</p>
+        <h1 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h1><p>在GO语言中处理错误，通过接口来处理</p>
 <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> builtin</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> <span class="type">error</span> <span class="keyword">interface</span> &#123;</span><br><span class="line">	Error() <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>在其他语言中，错误有可能是错误码，有可能是错误信息</p>

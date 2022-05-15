@@ -2,6 +2,6 @@
 title: {{ title }}
 categories:
 - 日常
-  tags:
+tags:
 - 日常
 ---

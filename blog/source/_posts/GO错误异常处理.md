@@ -149,7 +149,7 @@ if err := doSomething(); err != nil {
 ```
 //对error信息进行包装,并且带上调用栈信息
 errors.Wrap(err error, message string) error {}
-//按格式进行包装,并且带上带上调用栈信息
+//按格式进行包装,并且带上调用栈信息
 errors.Wrapf(err error, format string, args ...interface{}) error
 //对error进行解包，实现cause接口的error
 errors.Cause(err error) error 

@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -188,6 +188,135 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://exia081.github.io/blog/2022/05/14/Time%E5%8C%85%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Exia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="看山还是山">
+      <meta itemprop="description" content="山重水复疑无路，柳暗花明又一村">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 看山还是山">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/2022/05/14/Time%E5%8C%85%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/" class="post-title-link" itemprop="url">GO Time包使用示例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-14 21:46:06" itemprop="dateCreated datePublished" datetime="2022-05-14T21:46:06+08:00">2022-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-15 09:34:09" itemprop="dateModified" datetime="2022-05-15T09:34:09+08:00">2022-05-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/GO%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">GO语言</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="GO-Time包使用示例"><a href="#GO-Time包使用示例" class="headerlink" title="GO Time包使用示例"></a>GO Time包使用示例</h1><p>在GO语言中,时间相关的包为<strong>time</strong></p>
+<p>我们可以直接看go源码的src文件，里面有关于timer这个包的test代码</p>
+<p>下面列举部分常用的time相关函数</p>
+<h2 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h2><h5 id="time-After"><a href="#time-After" class="headerlink" title="time.After()"></a>time.After()</h5><p>在时间结束后往写入通道</p>
+<p>例子如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">func ExampleAfter() &#123;</span><br><span class="line">	select &#123;</span><br><span class="line">	case m := &lt;-c:</span><br><span class="line">		handle(m)</span><br><span class="line">	case &lt;-time.After(10 * time.Second):</span><br><span class="line">		fmt.Println(&quot;timed out&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="time-AfterFunc"><a href="#time-AfterFunc" class="headerlink" title="time.AfterFunc()"></a>time.AfterFunc()</h5><p>固定时间后执行函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">func TestAfterFunc(t *testing.T) &#123;</span><br><span class="line">	c := make(chan bool)</span><br><span class="line">	var f func()</span><br><span class="line">	fmt.Println(&quot;开始：&quot; + time.Now().String())</span><br><span class="line">	f = func() &#123;</span><br><span class="line">		fmt.Println(&quot;触发定时：&quot; + time.Now().String())</span><br><span class="line">		c &lt;- true</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	time.AfterFunc(time.Second*10, f)</span><br><span class="line">	&lt;-c</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">开始：2022-05-14 22:53:18.706485 +0800 CST m=+0.000048501</span><br><span class="line">触发定时：2022-05-14 22:53:28.707644 +0800 CST m=+10.001264751</span><br></pre></td></tr></table></figure>
+
+<h5 id="time-Tick"><a href="#time-Tick" class="headerlink" title="time.Tick()"></a>time.Tick()</h5><p>生成一个定时器，示例如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">c := time.Tick(5 * time.Second)</span><br><span class="line">for next := range c &#123;</span><br><span class="line">	fmt.Printf(&quot;date：%v timeSteamp：%v\n&quot;, next.Format(time.RFC3339), next.Unix())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">date：2022-05-14T22:13:53+08:00 timeSteamp：1652537633</span><br><span class="line">date：2022-05-14T22:13:58+08:00 timeSteamp：1652537638</span><br><span class="line">date：2022-05-14T22:14:03+08:00 timeSteamp：1652537643</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+
+<p>这个例子很有意思，原因在于使用range来读取管道，而且并没有提供关闭这个通道的方法，文档提示它不能被GC回收，使用不当会导致内存泄漏</p>
+<p>文档解释说：如果您的程序不需要释放关闭的情况下，使用这个方法是合理的</p>
+<h5 id="time-NewTicker"><a href="#time-NewTicker" class="headerlink" title="time.NewTicker()"></a>time.NewTicker()</h5><p>相比刚刚的tick函数，这个ticker似乎有更完善的机制</p>
+<p>提供<strong>ticker.Stop</strong>来释放资源</p>
+<p>提供<strong>ticker.Reset</strong>来重置</p>
+<p>官方示例如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ticker := time.NewTicker(time.Second)</span><br><span class="line">defer ticker.Stop()</span><br><span class="line">done := make(chan bool)</span><br><span class="line">go func() &#123;</span><br><span class="line">	time.Sleep(10 * time.Second)</span><br><span class="line">	done &lt;- true</span><br><span class="line">&#125;()</span><br><span class="line">for &#123;</span><br><span class="line">	select &#123;</span><br><span class="line">	case &lt;-done:</span><br><span class="line">		fmt.Println(&quot;Done!&quot;)</span><br><span class="line">		return</span><br><span class="line">	case t := &lt;-ticker.C:</span><br><span class="line">		fmt.Println(&quot;Current time: &quot;, t)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定时器准确性"><a href="#定时器准确性" class="headerlink" title="定时器准确性"></a>定时器准确性</h2><p>定时器实际上也是由CPU轮询触发的，因此必定会遭遇系统中断等情况，导致实际触发时间有差异</p>
+<p>一般而言，目前认为定时器能做到毫秒级的准确性</p>
+<p>需要注意的是go在1.14版本之后的实现，由每个P队列挂载时间堆来实现</p>
+<p>而堆的结构，顶部节点为最小值，所有的定时器，实际上就是往堆里面不断写入到期时间，即顶部的到期时间最近，他到期了，才有可能到下一层节点上的元素到期</p>
+<p>因此涉及到 堆的更新和查询</p>
+<p>目前定时器使用的堆为四叉堆，目的是为了降低层级，查询时间复杂度为O(log4 N)，查询时间有相比二叉堆有一定提升</p>
+<h4 id="Parse-解析时间"><a href="#Parse-解析时间" class="headerlink" title="Parse 解析时间"></a>Parse 解析时间</h4><p>官方的支持的时间解析格式并不是特别友好，建议使用carbon库来解决相关问题</p>
+<h4 id="TimeZone"><a href="#TimeZone" class="headerlink" title="TimeZone"></a>TimeZone</h4><p>默认解释的时间区为UTC时间，一般情况下，我们转换为字符串时，需要改为 <strong>Asia/Shanghai</strong>时区</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">loc, _ := time.LoadLocation(&quot;Asia/Shanghai&quot;)</span><br><span class="line">const shortForm = &quot;2006-Jan-02&quot;</span><br><span class="line">t, _ = time.ParseInLocation(shortForm, &quot;2012-Jul-09&quot;, loc)</span><br><span class="line">fmt.Println(t)</span><br></pre></td></tr></table></figure>
+
+<h4 id="时间间隔-（Duration）"><a href="#时间间隔-（Duration）" class="headerlink" title="时间间隔 （Duration）"></a>时间间隔 （Duration）</h4><h5 id="字符串解析-time-ParseDuration"><a href="#字符串解析-time-ParseDuration" class="headerlink" title="字符串解析 time.ParseDuration"></a>字符串解析 <strong>time.ParseDuration</strong></h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//根据字符串解释为时间间隔</span><br><span class="line">//格式 如 10h 1h10m10s 1µs 300ms</span><br><span class="line">// Valid time units are &quot;ns&quot;, &quot;us&quot; (or &quot;µs&quot;), &quot;ms&quot;, &quot;s&quot;, &quot;m&quot;, &quot;h&quot;.</span><br><span class="line">hours, _ := time.ParseDuration(&quot;10h&quot;)</span><br><span class="line">fmt.Printf(&quot;There are %.0f seconds in %v.\n&quot;, hours.Seconds(), hours)</span><br><span class="line">// There are 36000 seconds in 10h0m0s.</span><br></pre></td></tr></table></figure>
+
+<h5 id="计算时间间隔"><a href="#计算时间间隔" class="headerlink" title="计算时间间隔"></a>计算时间间隔</h5><h5 id="time-Since"><a href="#time-Since" class="headerlink" title="time.Since()"></a>time.Since()</h5><p>如在一些任务执行完毕以后，计算它的耗时</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start := time.Now()</span><br><span class="line">//doSomething</span><br><span class="line">time.Sleep(time.Second * 2)</span><br><span class="line">defer func() &#123;</span><br><span class="line">	timeSpent := time.Since(start)</span><br><span class="line">	fmt.Println(&quot;consume time:&quot; + timeSpent.String())</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">consume time:2.001047625s</span><br></pre></td></tr></table></figure>
+
+
+<h5 id="time-Until"><a href="#time-Until" class="headerlink" title="time.Until()"></a>time.Until()</h5><p>到某个时间的的间隔，负数表示在输入时间之前</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>定时器是很常见的包组件，它的精度是大家需要留意的。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://exia081.github.io/blog/2022/05/14/GO%E9%94%99%E8%AF%AF%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -218,7 +347,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-05-14 13:50:58 / 修改时间：15:49:08" itemprop="dateCreated datePublished" datetime="2022-05-14T13:50:58+08:00">2022-05-14</time>
+      <time title="创建时间：2022-05-14 13:50:58 / 修改时间：23:44:59" itemprop="dateCreated datePublished" datetime="2022-05-14T13:50:58+08:00">2022-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -277,7 +406,7 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if err := doSomething(); err != nil &#123;</span><br><span class="line">    return err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="Don’t-just-check-errors-handle-them-gracefully-（优雅地处理错误）"><a href="#Don’t-just-check-errors-handle-them-gracefully-（优雅地处理错误）" class="headerlink" title="Don’t just check errors,handle them gracefully.（优雅地处理错误）"></a>Don’t just check errors,handle them gracefully.（优雅地处理错误）</h3><p>在GO语音中，提供了很多对错误进行优化处理的方案</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//对error信息进行包装,并且带上调用栈信息</span><br><span class="line">errors.Wrap(err error, message string) error &#123;&#125;</span><br><span class="line">//按格式进行包装,并且带上带上调用栈信息</span><br><span class="line">errors.Wrapf(err error, format string, args ...interface&#123;&#125;) error</span><br><span class="line">//对error进行解包，实现cause接口的error</span><br><span class="line">errors.Cause(err error) error </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//对error信息进行包装,并且带上调用栈信息</span><br><span class="line">errors.Wrap(err error, message string) error &#123;&#125;</span><br><span class="line">//按格式进行包装,并且带上调用栈信息</span><br><span class="line">errors.Wrapf(err error, format string, args ...interface&#123;&#125;) error</span><br><span class="line">//对error进行解包，实现cause接口的error</span><br><span class="line">errors.Cause(err error) error </span><br></pre></td></tr></table></figure>
 
 <h3 id="Only-handle-error-once（只处理错误一次）"><a href="#Only-handle-error-once（只处理错误一次）" class="headerlink" title="Only handle error once（只处理错误一次）"></a>Only handle error once（只处理错误一次）</h3><p>在业务代码中，常常会写出很深的调用链</p>
 <p>这时候如果每一层都对错误进行处理，如打印日志，则打印大量相同的日志</p>

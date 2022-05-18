@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/blog/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"exia081.github.io","root":"/blog/","images":"/blog/images","scheme":"Gemini","darkmode":false,"version":"8.11.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/blog/js/config.js"></script>
+
+    <meta name="description" content="简介大多数开发者都使用过CURL，但对它庞大的功能知之甚少，它支持的参数多达数五十多个,而且还在不断的增加 它的功能非常强大，熟练的话，完全可以满足我们日常大部分需求 常用参数以下内容主要介绍它的常用参数 主要内容来自 《curl cookbook》 ，阮一峰老师的CURL用法指南命令手册介绍，使用命令curl –manual就可以查看它的全部介绍 GET请求GET请求相关的参数如下    参数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CURL指南">
+<meta property="og:url" content="https://exia081.github.io/blog/2022/05/18/CURL%E6%8C%87%E5%8D%97/index.html">
+<meta property="og:site_name" content="看山还是山">
+<meta property="og:description" content="简介大多数开发者都使用过CURL，但对它庞大的功能知之甚少，它支持的参数多达数五十多个,而且还在不断的增加 它的功能非常强大，熟练的话，完全可以满足我们日常大部分需求 常用参数以下内容主要介绍它的常用参数 主要内容来自 《curl cookbook》 ，阮一峰老师的CURL用法指南命令手册介绍，使用命令curl –manual就可以查看它的全部介绍 GET请求GET请求相关的参数如下    参数">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-05-18T13:35:11.000Z">
+<meta property="article:modified_time" content="2022-05-18T15:42:11.414Z">
+<meta property="article:author" content="Exia">
+<meta property="article:tag" content="LINUX命令">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://exia081.github.io/blog/2022/05/18/CURL%E6%8C%87%E5%8D%97/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://exia081.github.io/blog/2022/05/18/CURL%E6%8C%87%E5%8D%97/","path":"2022/05/18/CURL指南/","title":"CURL指南"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>CURL指南 | 看山还是山</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/blog/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/blog/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">看山还是山</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Exia的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-about"><a href="https://github.com/Exia081/" rel="noopener" target="_blank">关于</a></li><li class="menu-item menu-item-tags"><a href="/blog/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%8F%82%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GET%E8%AF%B7%E6%B1%82"><span class="nav-number">2.0.1.</span> <span class="nav-text">GET请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#POST%E8%AF%B7%E6%B1%82"><span class="nav-number">2.0.2.</span> <span class="nav-text">POST请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEheader%E7%9B%B8%E5%85%B3%E5%8F%82%E6%95%B0"><span class="nav-number">2.0.3.</span> <span class="nav-text">设置header相关参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%95%E5%AF%BC%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.0.4.</span> <span class="nav-text">引导设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%86%85%E5%AE%B9"><span class="nav-number">2.0.5.</span> <span class="nav-text">获取内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95%E6%89%93%E5%8D%B0"><span class="nav-number">2.0.6.</span> <span class="nav-text">调试打印</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Exia"
+      src="/blog/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Exia</p>
+  <div class="site-description" itemprop="description">山重水复疑无路，柳暗花明又一村</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/blog/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/blog/categories/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/blog/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Exia081/" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Exia081&#x2F;" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:exia081@gmail.com" title="E-Mail → mailto:exia081@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://weibo.com/u/1771010340" title="Weibo → https:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;1771010340" rel="noopener" target="_blank"><i class="fab fa-weibo fa-fw"></i>Weibo</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://exia081.github.io/blog/2022/05/18/CURL%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Exia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="看山还是山">
+      <meta itemprop="description" content="山重水复疑无路，柳暗花明又一村">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="CURL指南 | 看山还是山">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CURL指南
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-18 21:35:11 / 修改时间：23:42:11" itemprop="dateCreated datePublished" datetime="2022-05-18T21:35:11+08:00">2022-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/LINUX%E5%91%BD%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">LINUX命令</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>大多数开发者都使用过CURL，但对它庞大的功能知之甚少，它支持的参数多达数五十多个,而且还在不断的增加</p>
+<p>它的功能非常强大，熟练的话，完全可以满足我们日常大部分需求</p>
+<h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><p>以下内容主要介绍它的常用参数</p>
+<p>主要内容来自</p>
+<p><a target="_blank" rel="noopener" href="https://catonmat.net/cookbooks/curl">《curl cookbook》</a> ，<br><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2019/09/curl-reference.html">阮一峰老师的CURL用法指南</a><br>命令手册介绍，使用命令<strong>curl –manual</strong>就可以查看它的全部介绍</p>
+<h4 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h4><p>GET请求相关的参数如下</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-G</td>
+<td>将-d参数的内容改为GET参数</td>
+<td>curl -G -d ‘q=kitties’ -d ‘count=20’ <a target="_blank" rel="noopener" href="https://google.com/search">https://google.com/search</a><br/> 实际请求URL为<a target="_blank" rel="noopener" href="https://google.com/search?q=kitties&amp;count=20">https://google.com/search?q=kitties&amp;count=20</a></td>
+</tr>
+<tr>
+<td>–data-urlencode</td>
+<td>主要用于处理GET参数中包含空格的情况</td>
+<td>–data-urlencode ‘comment=hello world’</td>
+</tr>
+</tbody></table>
+<h4 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>post 数据</td>
+<td>curl -d’login=emma＆password=123’-X POST <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a><br/>或者 curl -d ‘login=emma’ -d ‘password=123’ -X POST  <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a></td>
+</tr>
+<tr>
+<td>-d @file</td>
+<td>读取文件内容作为post内容</td>
+<td>curl -d ‘@data.txt’ <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a><br/> 这样就直接读取data.txt内容向服务器发送</td>
+</tr>
+<tr>
+<td>–data-urlencode</td>
+<td>会对post内容进行urlencode</td>
+<td>curl –data-urlencode ‘comment=hello world’ <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a></td>
+</tr>
+<tr>
+<td>-F</td>
+<td>向服务器上传二进制文件,并且设置上传类型和文件名</td>
+<td>curl -F ‘file=@photo.png;type=image/png;filename=me.png’ <a target="_blank" rel="noopener" href="https://google.com/profile">https://google.com/profile</a><br/> 上面命令指定 MIME 类型为image/png，否则 curl 会把 MIME 类型设为application/octet-stream <br/> filename 指定服务器收到的文件名</td>
+</tr>
+</tbody></table>
+<h4 id="设置header相关参数"><a href="#设置header相关参数" class="headerlink" title="设置header相关参数"></a>设置header相关参数</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-A</td>
+<td>设置user-agent</td>
+<td>curl -A ‘Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 SaHari/537.36’ <a target="_blank" rel="noopener" href="https://google.com/">https://google.com</a></td>
+</tr>
+<tr>
+<td>-H</td>
+<td>指定对应的header，可以多个-H连写</td>
+<td>curl -H ‘Accept-Language: en-US’ -H ‘Secret-Message: xyzzy’ <a target="_blank" rel="noopener" href="https://google.com/">https://google.com</a></td>
+</tr>
+<tr>
+<td>-b</td>
+<td>设置cookie，可以多个-b连写</td>
+<td>curl -b ‘foo=bar’ <a target="_blank" rel="noopener" href="https://google.com/">https://google.com</a> 向服务器发送一个名为foo，值为bar的cookie</td>
+</tr>
+<tr>
+<td>-b file</td>
+<td>设置cookie文件</td>
+<td>curl -b cookies.txt <a target="_blank" rel="noopener" href="https://www.google.com/">https://www.google.com</a></td>
+</tr>
+<tr>
+<td>-e</td>
+<td>设置referer</td>
+<td>curl -e ‘<a target="_blank" rel="noopener" href="https://google.com/?q=example&#39;">https://google.com?q=example&#39;</a> <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-u</td>
+<td>账号密码授权</td>
+<td>curl -u ‘bob:12345’ <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a></td>
+</tr>
+</tbody></table>
+<h4 id="引导设置"><a href="#引导设置" class="headerlink" title="引导设置"></a>引导设置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-X</td>
+<td>指定请求方式，GET，POST，HEAD，PUT等</td>
+<td>curl -X POST <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-L</td>
+<td>允许重定向，默认CURL是不跟随重定向的</td>
+<td>curl -L <a target="_blank" rel="noopener" href="http://catonmat.net/">http://catonmat.net</a></td>
+</tr>
+<tr>
+<td>-x</td>
+<td>设置代理</td>
+<td>curl -x socks5://james:<a href="mailto:&#99;&#97;&#116;&#115;&#x40;&#109;&#x79;&#x70;&#x72;&#111;&#x78;&#x79;&#x2e;&#99;&#x6f;&#109;">&#99;&#97;&#116;&#115;&#x40;&#109;&#x79;&#x70;&#x72;&#111;&#x78;&#x79;&#x2e;&#99;&#x6f;&#109;</a>:8080 <a target="_blank" rel="noopener" href="https://catonmat.net/">https://catonmat.net</a></td>
+</tr>
+<tr>
+<td>-k</td>
+<td>跳过HTTPS校验，不检查证书是否正确</td>
+<td>curl -k <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>–resolve HOST:PORT:ADDRESS</td>
+<td>强制解析HOST到对应的IP:PORT，非常好用，可以配合通配符使用</td>
+<td>curl <a target="_blank" rel="noopener" href="https://datapixxxx.cn/">https://datapixxxx.cn/</a> –resolve *:443:1.1.1.1</td>
+</tr>
+<tr>
+<td>-K 或 –config  FILE</td>
+<td>指定配置文件,里面的内容按 每个参数一行进行设置</td>
+<td>curl -K config.txt <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+</tbody></table>
+<h4 id="获取内容"><a href="#获取内容" class="headerlink" title="获取内容"></a>获取内容</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c  file</td>
+<td>将服务器发送的cookie保存到对应的文件</td>
+<td>curl -c cookies.txt <a target="_blank" rel="noopener" href="https://www.google.com/">https://www.google.com</a></td>
+</tr>
+<tr>
+<td>-o  file</td>
+<td>将服务器响应保存到文件</td>
+<td>curl -o example.html <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-v</td>
+<td>打印整个请求过程，用于调试</td>
+<td>curl -v <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-i</td>
+<td>打印服务器响应的header</td>
+<td>curl -i <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-# 或者 –progress-bar</td>
+<td>显示进度条</td>
+<td>curl -# -i <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+</tbody></table>
+<h4 id="调试打印"><a href="#调试打印" class="headerlink" title="调试打印"></a>调试打印</h4><p>如果本地无法连接服务器，或响应很慢，我们肯定想知道是中间哪个环节出了问题</p>
+<p>这时候就需要使用-w参数，打印一些请求过程的参数，方便我们排查问题</p>
+<p>其中比较常用的参数如下</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>time_connect</td>
+<td>建立TCP连接花费的时间</td>
+</tr>
+<tr>
+<td>time_namelookup</td>
+<td>DNS查询花费的时间</td>
+</tr>
+<tr>
+<td>time_total</td>
+<td>全部完成花费时间</td>
+</tr>
+<tr>
+<td>remote_ip</td>
+<td>服务器IP</td>
+</tr>
+<tr>
+<td>remote_port</td>
+<td>服务器端口</td>
+</tr>
+<tr>
+<td>time_redirect</td>
+<td>重定向花费时间，包括重定向的DNS查询到完成响应的时间</td>
+</tr>
+</tbody></table>
+<p>下面是一个简单的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl  https://www.example.com -w &#x27;TCP连接时间:%&#123;time_connect&#125;\nDNS时间:%&#123;time_namelookup&#125;\n全部时间:%&#123;time_total&#125;\n服务器IP:%&#123;remote_ip&#125;\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>响应如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TCP连接时间:1.154614</span><br><span class="line">DNS时间:0.000895</span><br><span class="line">全部时间:2.381030</span><br><span class="line">服务器IP:93.184.216.34</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/LINUX%E5%91%BD%E4%BB%A4/" rel="tag"># LINUX命令</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/blog/2022/05/14/Time%E5%8C%85%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B/" rel="prev" title="GO Time包使用示例">
+                  <i class="fa fa-chevron-left"></i> GO Time包使用示例
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Exia</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/blog/js/comments.js"></script><script src="/blog/js/utils.js"></script><script src="/blog/js/motion.js"></script><script src="/blog/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

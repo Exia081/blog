@@ -128,18 +128,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/blog/categories/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/blog/tags/">
-        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -179,6 +179,290 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://exia081.github.io/blog/2022/05/18/CURL%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Exia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="看山还是山">
+      <meta itemprop="description" content="山重水复疑无路，柳暗花明又一村">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 看山还是山">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/2022/05/18/CURL%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">CURL指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-05-18 21:35:11 / 修改时间：23:42:11" itemprop="dateCreated datePublished" datetime="2022-05-18T21:35:11+08:00">2022-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/LINUX%E5%91%BD%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">LINUX命令</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>大多数开发者都使用过CURL，但对它庞大的功能知之甚少，它支持的参数多达数五十多个,而且还在不断的增加</p>
+<p>它的功能非常强大，熟练的话，完全可以满足我们日常大部分需求</p>
+<h2 id="常用参数"><a href="#常用参数" class="headerlink" title="常用参数"></a>常用参数</h2><p>以下内容主要介绍它的常用参数</p>
+<p>主要内容来自</p>
+<p><a target="_blank" rel="noopener" href="https://catonmat.net/cookbooks/curl">《curl cookbook》</a> ，<br><a target="_blank" rel="noopener" href="https://www.ruanyifeng.com/blog/2019/09/curl-reference.html">阮一峰老师的CURL用法指南</a><br>命令手册介绍，使用命令<strong>curl –manual</strong>就可以查看它的全部介绍</p>
+<h4 id="GET请求"><a href="#GET请求" class="headerlink" title="GET请求"></a>GET请求</h4><p>GET请求相关的参数如下</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-G</td>
+<td>将-d参数的内容改为GET参数</td>
+<td>curl -G -d ‘q=kitties’ -d ‘count=20’ <a target="_blank" rel="noopener" href="https://google.com/search">https://google.com/search</a><br/> 实际请求URL为<a target="_blank" rel="noopener" href="https://google.com/search?q=kitties&amp;count=20">https://google.com/search?q=kitties&amp;count=20</a></td>
+</tr>
+<tr>
+<td>–data-urlencode</td>
+<td>主要用于处理GET参数中包含空格的情况</td>
+<td>–data-urlencode ‘comment=hello world’</td>
+</tr>
+</tbody></table>
+<h4 id="POST请求"><a href="#POST请求" class="headerlink" title="POST请求"></a>POST请求</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-d</td>
+<td>post 数据</td>
+<td>curl -d’login=emma＆password=123’-X POST <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a><br/>或者 curl -d ‘login=emma’ -d ‘password=123’ -X POST  <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a></td>
+</tr>
+<tr>
+<td>-d @file</td>
+<td>读取文件内容作为post内容</td>
+<td>curl -d ‘@data.txt’ <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a><br/> 这样就直接读取data.txt内容向服务器发送</td>
+</tr>
+<tr>
+<td>–data-urlencode</td>
+<td>会对post内容进行urlencode</td>
+<td>curl –data-urlencode ‘comment=hello world’ <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a></td>
+</tr>
+<tr>
+<td>-F</td>
+<td>向服务器上传二进制文件,并且设置上传类型和文件名</td>
+<td>curl -F ‘file=@photo.png;type=image/png;filename=me.png’ <a target="_blank" rel="noopener" href="https://google.com/profile">https://google.com/profile</a><br/> 上面命令指定 MIME 类型为image/png，否则 curl 会把 MIME 类型设为application/octet-stream <br/> filename 指定服务器收到的文件名</td>
+</tr>
+</tbody></table>
+<h4 id="设置header相关参数"><a href="#设置header相关参数" class="headerlink" title="设置header相关参数"></a>设置header相关参数</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-A</td>
+<td>设置user-agent</td>
+<td>curl -A ‘Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 SaHari/537.36’ <a target="_blank" rel="noopener" href="https://google.com/">https://google.com</a></td>
+</tr>
+<tr>
+<td>-H</td>
+<td>指定对应的header，可以多个-H连写</td>
+<td>curl -H ‘Accept-Language: en-US’ -H ‘Secret-Message: xyzzy’ <a target="_blank" rel="noopener" href="https://google.com/">https://google.com</a></td>
+</tr>
+<tr>
+<td>-b</td>
+<td>设置cookie，可以多个-b连写</td>
+<td>curl -b ‘foo=bar’ <a target="_blank" rel="noopener" href="https://google.com/">https://google.com</a> 向服务器发送一个名为foo，值为bar的cookie</td>
+</tr>
+<tr>
+<td>-b file</td>
+<td>设置cookie文件</td>
+<td>curl -b cookies.txt <a target="_blank" rel="noopener" href="https://www.google.com/">https://www.google.com</a></td>
+</tr>
+<tr>
+<td>-e</td>
+<td>设置referer</td>
+<td>curl -e ‘<a target="_blank" rel="noopener" href="https://google.com/?q=example&#39;">https://google.com?q=example&#39;</a> <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-u</td>
+<td>账号密码授权</td>
+<td>curl -u ‘bob:12345’ <a target="_blank" rel="noopener" href="https://google.com/login">https://google.com/login</a></td>
+</tr>
+</tbody></table>
+<h4 id="引导设置"><a href="#引导设置" class="headerlink" title="引导设置"></a>引导设置</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-X</td>
+<td>指定请求方式，GET，POST，HEAD，PUT等</td>
+<td>curl -X POST <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-L</td>
+<td>允许重定向，默认CURL是不跟随重定向的</td>
+<td>curl -L <a target="_blank" rel="noopener" href="http://catonmat.net/">http://catonmat.net</a></td>
+</tr>
+<tr>
+<td>-x</td>
+<td>设置代理</td>
+<td>curl -x socks5://james:<a href="mailto:&#99;&#97;&#116;&#115;&#x40;&#109;&#x79;&#x70;&#x72;&#111;&#x78;&#x79;&#x2e;&#99;&#x6f;&#109;">&#99;&#97;&#116;&#115;&#x40;&#109;&#x79;&#x70;&#x72;&#111;&#x78;&#x79;&#x2e;&#99;&#x6f;&#109;</a>:8080 <a target="_blank" rel="noopener" href="https://catonmat.net/">https://catonmat.net</a></td>
+</tr>
+<tr>
+<td>-k</td>
+<td>跳过HTTPS校验，不检查证书是否正确</td>
+<td>curl -k <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>–resolve HOST:PORT:ADDRESS</td>
+<td>强制解析HOST到对应的IP:PORT，非常好用，可以配合通配符使用</td>
+<td>curl <a target="_blank" rel="noopener" href="https://datapixxxx.cn/">https://datapixxxx.cn/</a> –resolve *:443:1.1.1.1</td>
+</tr>
+<tr>
+<td>-K 或 –config  FILE</td>
+<td>指定配置文件,里面的内容按 每个参数一行进行设置</td>
+<td>curl -K config.txt <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+</tbody></table>
+<h4 id="获取内容"><a href="#获取内容" class="headerlink" title="获取内容"></a>获取内容</h4><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>-c  file</td>
+<td>将服务器发送的cookie保存到对应的文件</td>
+<td>curl -c cookies.txt <a target="_blank" rel="noopener" href="https://www.google.com/">https://www.google.com</a></td>
+</tr>
+<tr>
+<td>-o  file</td>
+<td>将服务器响应保存到文件</td>
+<td>curl -o example.html <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-v</td>
+<td>打印整个请求过程，用于调试</td>
+<td>curl -v <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-i</td>
+<td>打印服务器响应的header</td>
+<td>curl -i <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+<tr>
+<td>-# 或者 –progress-bar</td>
+<td>显示进度条</td>
+<td>curl -# -i <a target="_blank" rel="noopener" href="https://www.example.com/">https://www.example.com</a></td>
+</tr>
+</tbody></table>
+<h4 id="调试打印"><a href="#调试打印" class="headerlink" title="调试打印"></a>调试打印</h4><p>如果本地无法连接服务器，或响应很慢，我们肯定想知道是中间哪个环节出了问题</p>
+<p>这时候就需要使用-w参数，打印一些请求过程的参数，方便我们排查问题</p>
+<p>其中比较常用的参数如下</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>time_connect</td>
+<td>建立TCP连接花费的时间</td>
+</tr>
+<tr>
+<td>time_namelookup</td>
+<td>DNS查询花费的时间</td>
+</tr>
+<tr>
+<td>time_total</td>
+<td>全部完成花费时间</td>
+</tr>
+<tr>
+<td>remote_ip</td>
+<td>服务器IP</td>
+</tr>
+<tr>
+<td>remote_port</td>
+<td>服务器端口</td>
+</tr>
+<tr>
+<td>time_redirect</td>
+<td>重定向花费时间，包括重定向的DNS查询到完成响应的时间</td>
+</tr>
+</tbody></table>
+<p>下面是一个简单的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl  https://www.example.com -w &#x27;TCP连接时间:%&#123;time_connect&#125;\nDNS时间:%&#123;time_namelookup&#125;\n全部时间:%&#123;time_total&#125;\n服务器IP:%&#123;remote_ip&#125;\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>响应如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">TCP连接时间:1.154614</span><br><span class="line">DNS时间:0.000895</span><br><span class="line">全部时间:2.381030</span><br><span class="line">服务器IP:93.184.216.34</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

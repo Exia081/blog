@@ -1,9 +1,9 @@
 ---
 title: CURL指南 
 categories:
-- LINUX命令 
+- Linux 
 tags:
-- LINUX命令 
+- Linux 
 date: 2022-05-18 21:35:11
 ---
 

@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/blog/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -179,6 +179,193 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://exia081.github.io/blog/2022/07/07/CPU%E6%80%A7%E8%83%BD%E6%8E%92%E6%9F%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.png">
+      <meta itemprop="name" content="Exia">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="看山还是山">
+      <meta itemprop="description" content="山重水复疑无路，柳暗花明又一村">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 看山还是山">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/blog/2022/07/07/CPU%E6%80%A7%E8%83%BD%E6%8E%92%E6%9F%A5/" class="post-title-link" itemprop="url">CPU性能排查</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-07-07 17:18:19" itemprop="dateCreated datePublished" datetime="2022-07-07T17:18:19+08:00">2022-07-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-08 13:18:18" itemprop="dateModified" datetime="2022-07-08T13:18:18+08:00">2022-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在使用计算机的过程，必然会用到计算资源，CPU全称为中央处理器。</p>
+<p>其中包含了，控制器，运算器，储存器，三个组成部分。</p>
+<h2 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h2><ul>
+<li>提取指令</li>
+<li>解码</li>
+<li>执行</li>
+</ul>
+<h2 id="性能指标"><a href="#性能指标" class="headerlink" title="性能指标"></a>性能指标</h2><ul>
+<li>等待运行队列</li>
+<li>平均负载</li>
+<li>CPU使用率</li>
+<li>上下文切换</li>
+</ul>
+<h4 id="等待运行队列"><a href="#等待运行队列" class="headerlink" title="等待运行队列"></a>等待运行队列</h4><p>vmstat命令中，r和b参数可以进行查询</p>
+<h4 id="平均负载-uptime"><a href="#平均负载-uptime" class="headerlink" title="平均负载 uptime"></a>平均负载 uptime</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash-5.0# uptime</span><br><span class="line"> 18:42:52 up 174 days,  2:13,  0 users,  load average: 7.81, 6.88, 6.66</span><br></pre></td></tr></table></figure>
+
+<p>load average后面三个数值分别代表 1分钟，5分钟，15分钟，CPU使用的百分比</p>
+<h4 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h4><p>通常我们会关注系统不同部分使用CPU的情况</p>
+<ul>
+<li>用户进程时间百分比</li>
+<li>系统进程和中断的时间百分比</li>
+<li>IO等待使用CPU （idle）时间百分比</li>
+<li>空闲</li>
+</ul>
+<p>其中等待IO是一个我们值得关注的值，在IO密集型应用中，等待IO应该越小越好 空闲百分比太低，表示CPU资源紧张</p>
+<h4 id="top-和-vmsata-命令-查看CPU使用率"><a href="#top-和-vmsata-命令-查看CPU使用率" class="headerlink" title="top 和 vmsata 命令 查看CPU使用率"></a>top 和 vmsata 命令 查看CPU使用率</h4><p>top</p>
+<p>第一行 展示展示内存相关内容</p>
+<p>第二行 CPU使用情况相关情况</p>
+<ul>
+<li>total    进程总数</li>
+<li>running    正在运行的进程数</li>
+<li>sleeping    睡眠的进程数</li>
+<li>stopped    停止的进程数</li>
+<li>zombie    僵尸进程数</li>
+<li>%Cpu(s)</li>
+<li>0.0 us    用户空间占用CPU百分比</li>
+<li>0.1 sy    内核空间占用CPU百分比</li>
+<li>0.0 ni    用户进程空间内改变过优先级的进程占用CPU百分比</li>
+<li>98.7 id    空闲CPU百分比;</li>
+<li>0.0 wa    等待输入输出的CPU时间百分比</li>
+<li>0.0 hi    硬件CPU中断占用百分比</li>
+<li>0.0 si    软中断占用百分比</li>
+<li>0.0 st    虚拟机占用百分比 </li>
+</ul>
+<p>第三行 展示信息与uptime命令内容相同</p>
+<h4 id="vmstat"><a href="#vmstat" class="headerlink" title="vmstat"></a>vmstat</h4><p>下面是vmsat参数说明</p>
+<p>安装命令：apk add procps</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bash-5.0# vmstat</span><br><span class="line">procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----</span><br><span class="line"> r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st</span><br><span class="line"> 9  0      0 29328352 5430196 74941208    0    0     0    31    0    0 16  9 74  0  0</span><br></pre></td></tr></table></figure>
+
+<h6 id="Progress进程说明"><a href="#Progress进程说明" class="headerlink" title="Progress进程说明"></a>Progress进程说明</h6><ul>
+<li>r 等待进程数</li>
+<li>b 等待io进程数</li>
+</ul>
+<h6 id="Swap"><a href="#Swap" class="headerlink" title="Swap"></a>Swap</h6><ul>
+<li>si 每秒从交换区写到内存的大小</li>
+<li>so 每秒写入交换区的内存大小，从内存调入磁盘</li>
+</ul>
+<p>如果这两个值长期大于0，系统性能会受到影响，磁盘IO和CPU都会被额外消耗</p>
+<h6 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h6><ul>
+<li>bi 每秒读取块数</li>
+<li>bo 每秒写入块数</li>
+</ul>
+<p>随机磁盘读写中，bi，bo这两个值越大，CPU的IO等待值就越大</p>
+<h6 id="system-系统"><a href="#system-系统" class="headerlink" title="system 系统"></a>system 系统</h6><ul>
+<li>in ： 每秒中断数</li>
+<li>cs： 每秒上下文切换数</li>
+</ul>
+<p>两者值越大，内核消耗CPU时间越大</p>
+<h6 id="CPU（以百分比表示）"><a href="#CPU（以百分比表示）" class="headerlink" title="CPU（以百分比表示）"></a>CPU（以百分比表示）</h6><ul>
+<li>us：用户进程进行时间百分比</li>
+<li>sy：内核系统进程执行时间百分比</li>
+<li>id：空闲时间百分比</li>
+<li>wa：IO等待时间百分比，磁盘大量随机读写时会偏高</li>
+<li>st：虚拟机占用CPU的百分比</li>
+</ul>
+<h5 id="pidstat"><a href="#pidstat" class="headerlink" title="pidstat"></a>pidstat</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bash-5.0<span class="comment"># pidstat</span></span><br><span class="line">Linux 3.10.0-957.el7.x86_64 (watcher-test-59df69f65f-l2dnd)     07/07/22        _x86_64_        (24 CPU)</span><br><span class="line"></span><br><span class="line">18:45:13      UID       PID    %usr %system  %guest   %<span class="built_in">wait</span>    %CPU   CPU  Command</span><br><span class="line">18:45:13        0         1    0.00    0.00    0.00    0.00    0.00     7  supervisord</span><br><span class="line">18:45:13        0         8    0.00    0.00    0.00    0.00    0.00    13  study_admin</span><br><span class="line">18:45:13        0        34    0.00    0.00    0.00    0.00    0.00     8  bash</span><br><span class="line">18:45:13        0       123    0.00    0.00    0.00    0.00    0.00     3  bash</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>PID：进程ID</li>
+<li>%usr：进程在用户空间占用cpu的百分比</li>
+<li>%system：进程在内核空间占用cpu的百分比</li>
+<li>%guest：进程在虚拟机占用cpu的百分比</li>
+<li>%CPU：进程占用cpu的百分比</li>
+<li>CPU：处理进程的cpu编号</li>
+<li>Command：当前进程对应的命令</li>
+</ul>
+<h4 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h4><p>发生上下文切换的场景</p>
+<ul>
+<li>公平调度算法</li>
+<li>资源不足（内存）</li>
+<li>主动挂起 sleep</li>
+<li>优先级</li>
+<li>硬件中断</li>
+</ul>
+<p>安装 apk add sysstat</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">bash-5.0# pidstat -w</span><br><span class="line">Linux 3.10.0-957.el7.x86_64 (watcher-test-59df69f65f-l2dnd)     07/07/22        _x86_64_        (24 CPU)</span><br><span class="line"></span><br><span class="line">18:45:57      UID       PID   cswch/s nvcswch/s  Command</span><br><span class="line">18:45:57        0         1      0.00      0.00  supervisord</span><br><span class="line">18:45:57        0         8      0.01      0.00  study_admin</span><br><span class="line">18:45:57        0        34      0.00      0.00  bash</span><br><span class="line">18:45:57        0        63      0.00      0.00  watch</span><br><span class="line">18:45:57        0        65      0.00      0.00  bash</span><br><span class="line">18:45:57        0       123      0.00      0.00  bash</span><br><span class="line">18:45:57        0       137      0.00      0.00  pidstat</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>cswch 自愿上下文切换 比如IO，内存不足，就会发生切换</li>
+<li>nvcswch 非自愿，可能由于进程时间片用完，被系统强制切换</li>
+</ul>
+<h4 id="模拟上下文切换"><a href="#模拟上下文切换" class="headerlink" title="模拟上下文切换"></a>模拟上下文切换</h4><p>sysbench</p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="https://www.hi917.com/detail/434.html">https://www.hi917.com/detail/434.html</a><br><a target="_blank" rel="noopener" href="https://www.brendangregg.com/">https://www.brendangregg.com/</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44175418/article/details/124986740">https://blog.csdn.net/weixin_44175418/article/details/124986740</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/ligupeng7929/article/details/89888768">https://blog.csdn.net/ligupeng7929/article/details/89888768</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/A642960662/article/details/123030264">https://blog.csdn.net/A642960662/article/details/123030264</a><br><a target="_blank" rel="noopener" href="https://blog.csdn.net/lin443514407lin/article/details/54342754">https://blog.csdn.net/lin443514407lin/article/details/54342754</a><br><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/intro/100020901">https://time.geekbang.org/column/intro/100020901</a><br><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1513544">https://cloud.tencent.com/developer/article/1513544</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -378,9 +565,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-05-18 21:35:11 / 修改时间：23:42:11" itemprop="dateCreated datePublished" datetime="2022-05-18T21:35:11+08:00">2022-05-18</time>
+      <time title="创建时间：2022-05-18 21:35:11" itemprop="dateCreated datePublished" datetime="2022-05-18T21:35:11+08:00">2022-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-07-07 17:19:00" itemprop="dateModified" datetime="2022-07-07T17:19:00+08:00">2022-07-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -388,7 +581,7 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/blog/categories/LINUX%E5%91%BD%E4%BB%A4/" itemprop="url" rel="index"><span itemprop="name">LINUX命令</span></a>
+          <a href="/blog/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
         </span>
     </span>
 
@@ -516,7 +709,7 @@
 <tr>
 <td>-x</td>
 <td>设置代理</td>
-<td>curl -x socks5://james:<a href="mailto:&#x63;&#x61;&#116;&#x73;&#64;&#x6d;&#x79;&#112;&#x72;&#x6f;&#x78;&#x79;&#x2e;&#99;&#111;&#109;">&#x63;&#x61;&#116;&#x73;&#64;&#x6d;&#x79;&#112;&#x72;&#x6f;&#x78;&#x79;&#x2e;&#99;&#111;&#109;</a>:8080 <a target="_blank" rel="noopener" href="https://catonmat.net/">https://catonmat.net</a></td>
+<td>curl -x socks5://james:<a href="mailto:&#99;&#x61;&#116;&#x73;&#64;&#x6d;&#x79;&#112;&#x72;&#x6f;&#x78;&#121;&#x2e;&#99;&#111;&#109;">&#99;&#x61;&#116;&#x73;&#64;&#x6d;&#x79;&#112;&#x72;&#x6f;&#x78;&#121;&#x2e;&#99;&#111;&#109;</a>:8080 <a target="_blank" rel="noopener" href="https://catonmat.net/">https://catonmat.net</a></td>
 </tr>
 <tr>
 <td>-k</td>
